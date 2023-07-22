@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Auth } from "./Auth";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 export default function Header(params) {
   const router = useRouter();
@@ -11,6 +12,8 @@ export default function Header(params) {
     setTimeout(() => {
       router.push("/");
     }, 200);
+
+    window.location.reload();
   };
 
   return (
@@ -63,7 +66,7 @@ export default function Header(params) {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <img
+                  <Image
                     src="https://cdn-icons-png.flaticon.com/512/1864/1864472.png"
                     alt=""
                     width="32"
@@ -87,13 +90,13 @@ export default function Header(params) {
                     </Link>
                   </li>
                   <li>
-                    <a
+                    <Link
                       className="dropdown-item link-danger fs-7"
                       href="/"
                       onClick={handleLogOut}
                     >
                       Log out
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
