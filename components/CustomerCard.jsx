@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Auth } from "./Auth";
+import { useRouter } from "next/router";
 
 const CustomerCard = (props) => {
+  const router = useRouter();
   const userData = Auth();
 
   const [editing, setEditing] = useState(false);
@@ -59,29 +61,33 @@ const CustomerCard = (props) => {
   };
 
   const handleDelete = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(`/api/delete`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: props.email }),
-      });
+    if (userData) {
+      try {
+        const response = await fetch(`/api/delete`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: props.email }),
+        });
 
-      if (response.ok) {
-        if (userData.email == props.email) {
-          localStorage.removeItem("token");
-          setTimeout(() => {
-            router.push("/");
-          }, 200);
+        if (response.ok) {
+          if (userData.email == props.email) {
+            localStorage.removeItem("token");
+            setTimeout(() => {
+              router.push("/");
+            }, 200);
+          }
+          window.location.reload();
+        } else {
+          console.error("Error deleting user data");
         }
-        window.location.reload();
-      } else {
-        console.error("Error deleting user data");
+      } catch (error) {
+        console.error("Error deleting user:", error);
       }
-    } catch (error) {
-      console.error("Error deleting user:", error);
+    } else {
+      alert("Log in to delete an account!");
+      router.push({ pathnam: "/login" });
     }
   };
 

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -182,6 +183,12 @@ export default function Signup(params) {
               ) : (
                 <></>
               )}
+            </div>
+            <div className="d-flex align-items-center justify-content-between mb-4">
+              <p className="mb-0">Already have an account?</p>
+              <Link href={"/login"} className="link-success">
+                Log in
+              </Link>
             </div>
             <button
               className="btn btn-green rounded-pill d-flex align-items-center px-5"
